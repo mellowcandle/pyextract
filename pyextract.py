@@ -4,7 +4,7 @@ import argparse
 import os
 import subprocess
 import logging
-
+from pathlib import Path
 
 def main():
 
@@ -26,8 +26,9 @@ def main():
     if os.path.isfile(args.input):
         extract_file(args.input, args.output)
     else:
-        extract_dir(args.input)
+        extract_dir(args.input, args.output)
 
+    exit(0)
 
 def extract_file(filename, output):
     extract_cmd = ['7z']
@@ -37,14 +38,20 @@ def extract_file(filename, output):
         if output:
             extract_cmd.append('-o' + output)
 
-        subprocess.check_call(extract_cmd)
+        subprocess.call(extract_cmd)
 
     else:
         logging.error("ERROR: Unsupported file format: " + filename)
 
 
-def extract_dir(directory):
-    print("Extract a dir")
+def extract_dir(directory, output):
+    file_list = sorted(Path(directory).glob('**/*.rar'))
+    file_list += sorted(Path(directory).glob('**/*.zip'))
+
+
+    for x in file_list:
+        logging.debug("Attempting to extract: " + os.fspath(x))
+        extract_file(os.fspath(x), output)
 
 
 if __name__ == '__main__':
