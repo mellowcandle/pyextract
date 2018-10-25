@@ -37,6 +37,8 @@ def extract_file(filename, output):
     if filename.endswith(('.rar','.zip')):
         if output:
             extract_cmd.append('-o' + output)
+        else:
+            extract_cmd.append('-o' + os.path.dirname(filename))
 
         subprocess.call(extract_cmd)
 
