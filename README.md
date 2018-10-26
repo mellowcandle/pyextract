@@ -23,7 +23,7 @@ sudo apt-get install p7zip-full
 ### Qbittorent
 Tools -> Preferences -> Downloads -> "Run external program on torrent completion".
 ```
-"/usr/local/bin/pyextrat.py %F"
+"/usr/local/bin/pyextract.py %F"
 ```
 
 ## Additional options
